@@ -1,0 +1,118 @@
+using System;
+using System.Diagnostics;
+
+class PrimeNum
+{
+    static ulong _w = 0;        //rnd num
+    //-----------------------------------------
+    static bool Prime(ulong n)     //100% prime
+    {
+        if (n < 2) return false;
+        else if (n < 4) return true;
+        else if (n % 2 == 0) return false;
+        else
+        {
+            ulong s = (ulong)Math.Sqrt(n);
+            for (ulong i = 3; i <= s; i += 2)
+            {
+                if (n % i == 0) return false;
+            }
+        }
+        return true;
+    }
+    //---------------------------------
+    // (pseudo)Number Generator
+    //---------------------------------
+    static ulong Random(ulong b)
+    {
+        Random rnd = new Random();
+        for (int i = 1; i <= 8; i++)        //8x for better randomness
+        {
+            _w = (ulong)rnd.Next(2, 2147483647);
+        }
+        return _w;
+    }
+
+    // Function multiplies w(/)rnd_num i rnd_num mod num
+    //--------------------------
+    static ulong MultiplctnMod(ulong a, ulong b, ulong n)      //(w, rnd_num, num)  (rnd_num, rnd_num, num)
+    {
+        ulong w = 0;
+        for (ulong m = 1; m != 0; m <<= 1)        //64x loops
+        {
+            if ((b & m) != 0) w = (w + a) % n;
+            a = (a << 1) % n;
+        }
+        return w;
+    }
+
+    // Function calculates  rnd_num^d mod num
+    //--------------------------
+    static ulong ExptnMod(ulong a, ulong e, ulong n)  //(rnd_num, d, num)
+    {
+        ulong p, w;
+
+        p = a; w = 1;
+        for (ulong m = 1; m != 0; m <<= 1)        //64x loops
+        {
+            if ((e & m) != 0) w = MultiplctnMod(w, p, n);
+            p = MultiplctnMod(p, p, n);
+        }
+        return w;
+    }
+    static void Main()
+    {
+        ulong d, num;        //multiplier of power 2 in divider num - 1       //d-mno¿nik potêgi 2 w dzielniku num - 1
+        int s, quality;
+        bool t;
+
+        num = 100913;        //number    //100914061340101;
+        quality = 20;     //quality //chance 1 to 1099511627776 (for 20)
+
+        s = 0;        //exponent of power 2 in the divider num - 1      //wyk³adnik potêgi 2 w dzielniku num - 1
+        for (d = num - 1; d % 2 == 0; s++) d /= 2;
+        t = true;
+
+        Stopwatch st = new Stopwatch();
+
+        st.Start();
+        t = CheckPrime(d, num, s, quality, t);
+        //if (t) t = Prime(num);        // <----- better quality, slower operation
+        st.Stop();
+        Console.WriteLine(t);
+        Console.WriteLine("Time = " + st.ElapsedMilliseconds);
+
+    }
+
+    private static bool CheckPrime(ulong d, ulong num, int s, int quality, bool t)
+    {
+        ulong rnd_num, x;       //x-number of string      //x-wyraz ci¹gu Millera-Rabina
+        if (MaybePrime(num) == false) return t = false;     //ADDTL SCRTY SPEED
+        for (int i = 1; i <= quality; i++)
+        {
+            rnd_num = Random(num - 2);      //number selected randomly
+            x = ExptnMod(rnd_num, d, num);        //modulo exponentiation       //potêgowanie modulo
+            if ((x == 1) || (x == num - 1)) continue;       //num has passed the exam --> num is prime
+            for (int j = 1; (j < s) && (x != num - 1); j++)
+            {
+                x = MultiplctnMod(x, x, num);       //multiplication of modulo      //mno¿enie modulo
+                if (x == 1)
+                {
+                    t = false; break;
+                }
+            }
+            if (!t) break;      //additional security
+            if (x != num - 1)
+            {
+                t = false; break;
+            }
+        }
+
+        return t;
+    }
+    static bool MaybePrime(ulong num)       //additional method (security and speed)
+    {
+        if ((num + 1) % 6 == 0 || (num - 1) % 6 == 0) return true;
+        else return false;
+    }
+} // App

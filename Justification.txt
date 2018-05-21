@@ -1,0 +1,102 @@
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.IO;
+
+class Justification
+{
+    static List<string> list = new List<string>();
+    static List<string> list_2 = new List<string>();
+    static string Justuj(string s, int rowlen)     //s==tekst  rowlen==ilosc znakow  w lini
+    {
+        if (s == null || rowlen == 0) return "";
+        else if (s.Length <= rowlen) return s;
+        else if (s.Length > rowlen)
+        {
+
+            char char1, char2;
+            char1 = ' '; char2 = '\n';      //characters to be removed
+            var r = s.Split(char1, char2);      //remove chars
+            foreach (string spr in r) { if (spr.Length > rowlen) { return "Correct the mistakes!"; } }
+            foreach (string element in r) { list_2.Add(element); }        //tab r --> list list_2
+            list_2.Add(" ");
+            int HowMany_NewLines = 0;
+            string new_line = "";       //holds a string of characters
+            int il_n = 0;
+            for (int i = 0; i < list_2.Count - 1; i++)
+            {
+                if ((new_line.Length + list_2[i].Length) < rowlen) AddWord(rowlen, list_2, ref new_line, ref il_n, i, ref HowMany_NewLines);
+                else if (new_line.Length == rowlen)
+                {
+                    NewLine(out new_line, out il_n);
+                    HowMany_NewLines++;
+                    AddWord(rowlen, list_2, ref new_line, ref il_n, i, ref HowMany_NewLines);
+                } //new row(line)  //add a word        
+                else
+                {  //add space characters
+                    AddSpaces(rowlen, HowMany_NewLines, ref new_line, il_n, i);
+                    NewLine(out new_line, out il_n);
+                    HowMany_NewLines++;
+                    AddWord(rowlen, list_2, ref new_line, ref il_n, i, ref HowMany_NewLines);
+                }
+            }
+            return new_line;
+        }
+        else { return s; }
+    }
+
+    private static void AddSpaces(int rowlen, int HowMany_NewLines, ref string new_line, int il_n, int i)
+    {
+        int QntySpcs;     //number of spaces
+        int space_place = i - il_n;
+        QntySpcs = rowlen - new_line.Length;       //the num of a spaces missing 
+        int k = 0;
+        while (k < QntySpcs)
+        {
+            if (space_place < (i - 1))
+            {
+                new_line += "x";
+
+                list[space_place + HowMany_NewLines] += " ";
+                space_place++;
+
+                k++;
+            }
+            else { space_place = i - il_n; }
+        }
+    }
+
+    private static void NewLine(out string new_line, out int il_n)
+    {
+        list.Add("\n"); il_n = 0; new_line = "";        //new row(line)
+    }
+
+    private static void AddWord(int rowlen, List<string> list_2, ref string new_line, ref int il_n, int i, ref int il_for_list)
+    {
+        new_line += list_2[i]; list.Add(list_2[i]); il_n++;      //add a word
+        if (new_line.Length + list_2[(i + 1)].Length < rowlen)
+        { new_line += " "; list[i + il_for_list] += (" "); }      //add a space char
+    }
+
+    //-------------------------
+
+    static void Main()
+    {
+        //1)  Console.WriteLine("Enter text:"); string s = Console.ReadLine();
+        //2}  Console.WriteLine("Give the full name of the file (with extension):"); string file_name = Console.ReadLine(); StreamReader file_open = new StreamReader(file_name); string s = file_open.ReadLine();
+        string s = "Im d³u¿ej korzystamy z Google Now, tym bardziej staje siê dla nas pomocny. Wyœwietla w formie kart artyku³y z mediów, które odpowiadaj¹ naszym zainteresowaniom, przewiduje, jak d³ugo zajmie nam dojazd do pracy, gdy znajdzie w naszej skrzynce e-mai-lowej wiadomoœæ z biletami lotniczymi, w odpowiedniej chwili przypomina nam o wycieczce i przekazuje nam wyniki naszego ulubionego klubu sportowego.";
+        StreamWriter file = new StreamWriter("justt.txt");
+        string sj = Justuj(s, 60);
+        string just_done = "";
+        foreach (string list_to_string in list) { just_done += list_to_string; }  
+
+        var sth = just_done.Split('\n');
+
+        foreach (string stha in sth) { file.WriteLine(stha); }
+        file.Close();
+        if (sj == "Correct the mistakes!") Console.WriteLine(sj);
+        Console.WriteLine(just_done);
+        Console.ReadLine();
+ 
+    }
+} // App
