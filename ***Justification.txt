@@ -84,7 +84,7 @@ class Justification
     {
         //1)  Console.WriteLine("Enter text:"); string s = Console.ReadLine();
         //2}  Console.WriteLine("Give the full name of the file (with extension):"); string file_name = Console.ReadLine(); StreamReader file_open = new StreamReader(file_name); string s = file_open.ReadLine();
-        string s = "Im d³u¿ej korzystamy z Google Now, tym bardziej staje siê dla nas pomocny. Wyœwietla w formie kart artyku³y z mediów, które odpowiadaj¹ naszym zainteresowaniom, przewiduje, jak d³ugo zajmie nam dojazd do pracy, gdy znajdzie w naszej skrzynce e-mai-lowej wiadomoœæ z biletami lotniczymi, w odpowiedniej chwili przypomina nam o wycieczce i przekazuje nam wyniki naszego ulubionego klubu sportowego.";
+        string s = "Im dÂ³uÂ¿ej korzystamy z Google Now, tym bardziej staje siÃª dla nas pomocny. WyÅ“wietla w formie kart artykuÂ³y z mediÃ³w, ktÃ³re odpowiadajÂ¹ naszym zainteresowaniom, przewiduje, jak dÂ³ugo zajmie nam dojazd do pracy, gdy znajdzie w naszej skrzynce e-mai-lowej wiadomoÅ“Ã¦ z biletami lotniczymi, w odpowiedniej chwili przypomina nam o wycieczce i przekazuje nam wyniki naszego ulubionego klubu sportowego.";
         StreamWriter file = new StreamWriter("justt.txt");
         string sj = Justuj(s, 60);
         string just_done = "";
