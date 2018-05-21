@@ -1,0 +1,240 @@
+using System;
+using System.IO;
+using System.Diagnostics;
+
+class Projekt_1
+{
+    const int Max_Value_Int = 268435455;   //maks. wartoœæ int
+    static int[] Tab;
+    static long Count_Op;  //zmienna licz¹ca operacje
+
+    //----------------
+
+    static int BinSearch(int N, int Number)  //pesymistyczne dla Number == 0   //N==wielkoœæ tablicy
+    {
+        int Left = 0;  //lewa strona tablicy
+        int Right = N - 1;  //prawa strona tablicy  (zak³adamy rozmiar (2^i)-1)
+        int Middle;   //œrodek tablicy
+        while (Left <= Right)
+        {
+            Count_Op++;  //liczenie operacji
+            Middle = (Left + Right) >> 1; // dzielenie przez 2    
+
+            if (Tab[Middle] == Number) return Middle;  //zwraca pozycjê, na jakiej znajduje siê szukana liczba
+            else if (Tab[Middle] > Number) Right = Middle - 1;
+            else Left = Middle + 1;
+        }
+        return -1;    //zwraca wartoœc -1, je¿eli w tablicy nie ma porz¹danej wartoœci
+    }
+    //----------------
+
+    static int LinSearch(int N, int Number)
+    {
+        for (int i = 0; i < N; i++)
+        {
+            Count_Op++;
+            if (Tab[i] == Number) return i;
+        }
+        return -1;
+    }
+    //--------------------
+
+    static void LinPes()
+    {
+        StreamWriter file = new StreamWriter("lin_pes.csv");
+        for (int i = 100; i <= 200; i += 10)
+        {
+            int n = i * 1000000;
+            Count_Op = 0;
+            LinSearch(n, 0);
+            file.WriteLine("{0}; {1}", n, Count_Op);
+            Console.WriteLine("{0}; {1}", n, Count_Op);
+        }
+        file.Close();
+    }
+    //--------------------
+    static void LinPesCzas()
+    {
+        Stopwatch Stoper = new Stopwatch(); //inicjacja klasy Stopwatch() ~~tworzymy stoper
+        StreamWriter file = new StreamWriter("lin_pes_czas.csv"); //tworzymy plik "bin_pes_czas" z rozszerzeniem csv
+        for (int i = 100; i <= 200; i += 10)
+        {
+            int n = i * 1000000;  // 2^i - 1    //wielkoœæ tablicy (2^i)-1 
+            Stoper.Restart(); //ustawienie czasu stopera na 0 i w³¹czenie
+            for (int j = 0; j < 25; j++) LinSearch(n, 0); //wywo³anie szukania binarnego (1mln dla dok³. wyników) 
+            Stoper.Stop(); //zatrzymanie stopera 
+            file.WriteLine("{0}; {1}", n, Stoper.ElapsedMilliseconds); //zapis danych w pliku 
+            Console.WriteLine("{0}; {1}", n, Stoper.ElapsedMilliseconds); //wyœwietlenie danych na konsoli           
+        }
+        file.Close();
+    }
+    //---------------------
+    static void LinAvg()
+    {
+        StreamWriter file = new StreamWriter("lin_avg.csv");
+        for (int i = 100; i <= 200; i += 10)
+        {
+            int n = i * 100;
+            Count_Op = 0;
+            for (int j = 0; j < n; j++)
+            {
+                LinSearch(n, Tab[j]);
+            }
+            file.WriteLine("{0}; {1}", n, ((double)Count_Op) / n);
+            Console.WriteLine("{0}; {1}", n, ((double)Count_Op) / n);
+        }
+        file.Close();
+    }
+    //--------------------
+    static void LinAvgTime()
+    {
+        Stopwatch Stoper = new Stopwatch();
+        StreamWriter file = new StreamWriter("lin_avg_time.csv");
+        for (int i = 100; i <= 200; i += 10)
+        {
+            int n = i * 100;  //wielkoœæ tablicy, w której bêdziemy szukaæ elementu
+            Stoper.Restart();
+            for (int k = 0; k < 40; k++) for (int j = 0; j < n; j++) LinSearch(n, Tab[j]);
+            Stoper.Stop();
+            double czas = Stoper.ElapsedMilliseconds;
+            file.WriteLine("{0}; {1}", n, (czas / n));
+            Console.WriteLine("{0}; {1}", n, (czas / n));
+        }
+        file.Close();
+    }
+
+    //----------------------
+
+    static void BinAvgTest(int n)
+    {
+        Count_Op = 0;
+        for (int j = 0; j < n; j++)
+        {
+            BinSearch(n, Tab[j]);
+        }
+        Console.WriteLine("{0}; {1}; {2}", n, Count_Op, ((double)Count_Op) / n);
+    }
+
+    //--------------------
+
+    static void BinPes()
+    {
+        int n = 100000;
+        StreamWriter file_csv = new StreamWriter("bin_pes.csv");
+        for (int i = 10; i <= 28; i++)
+        {
+            n += 100000;
+            Count_Op = 0;
+            BinSearch(n, 0);
+            file_csv.WriteLine("{0}; {1}", n, Count_Op);
+            Console.WriteLine("{0}; {1}", n, Count_Op);
+        }
+        file_csv.Close();
+    }
+    //--------------------
+
+
+    static void BinPesCzas() //wycena czasu wyszukiwania binarnego pesymistycznego
+    {
+        int n = 100;
+        Stopwatch Stoper = new Stopwatch(); //inicjacja klasy Stopwatch() ~~tworzymy stoper
+        StreamWriter file = new StreamWriter("bin_pes_czas.csv"); //tworzymy plik "bin_pes_czas" z rozszerzeniem csv
+        for (int i = 10; i <= 18; i++)
+        {
+            n = n * 5;
+            //Cnt = 0;  // ??? liczenie operacji ???
+
+            Stoper.Restart(); //ustawienie czasu stopera na 0 i w³¹czenie
+            for (int j = 0; j < 100000000; j++) BinSearch(n, 0); //wywo³anie szukania binarnego //1mln zwiêkszenie operacji dla dok³adniejszych wyników
+            Stoper.Stop(); //zatrzymanie stopera 
+
+            file.WriteLine("{0}; {1}; {2}", i, n, Stoper.ElapsedMilliseconds); //zapis danych w pliku 
+            Console.WriteLine("{0}; {1}; {2}", i, n, Stoper.ElapsedMilliseconds); //wyœwietlenie danych na konsoli           
+        }
+        file.Close();
+    }
+    //--------------------
+
+    static void BinAvg()
+    {
+        int n = 0;
+        StreamWriter file = new StreamWriter("bin_avg.csv");
+        for (int i = 10; i <= 28; i++)
+        {
+            n = n + 100000;
+            Count_Op = 0;
+            for (int j = 0; j < n; j++)
+            {
+                BinSearch(n, Tab[j]);
+            }
+            file.WriteLine("{0}; {1}; {2}", i, n, ((double)Count_Op) / n);
+            Console.WriteLine("{0}; {1}; {2}", i, n, ((double)Count_Op) / n);
+        }
+        file.Close();
+    }
+    //--------------------
+    static void Bin_Avg_Czas()
+    {
+        int n = 0;
+        Stopwatch Stoper = new Stopwatch(); //inicjacja klasy Stopwatch() ~~tworzymy stoper
+        StreamWriter file = new StreamWriter("bin_avg_czas.csv"); //tworzymy plik "bin_avg_czas" z rozszerzeniem csv
+        for (int i = 10; i <= 28; i++)
+        {
+            n += 100000;
+            Stoper.Restart(); //ustawienie czasu stopera na 0 i w³¹czenie
+            for (int k = 0; k < 100; k++) for (int j = 0; j < n; j++) BinSearch(n, Tab[j]);
+            Stoper.Stop(); //zatrzymanie stopera 
+            double czas = Stoper.ElapsedMilliseconds;
+            file.WriteLine("{0}; {1}", n, (czas / n)); //zapis danych w pliku 
+            Console.WriteLine("{0}; {1}", n, (czas / n)); //wyœwietlenie danych na konsoli           
+        }
+        file.Close();
+
+    }
+    //--------------------
+
+    static void Main()
+    {
+        Tab = new int[Max_Value_Int];
+        for (int i = 0; i < Max_Value_Int; i++) Tab[i] = i + 1; //wype³niamy tablice elementami od 1 do 268435456 (Maks. wartoœæ int[2^28])      
+
+        /*BinAvgTest(3);
+        BinAvgTest(7);
+        BinAvgTest(15);
+        BinAvgTest(31);
+        BinAvgTest(63);
+        BinAvgTest(127);
+        BinAvgTest(255);
+        BinAvgTest(511);
+        BinAvgTest(1023);*/
+
+        // zlozonosc = N
+        //Console.WriteLine("LinPes:");
+        //LinPes();
+
+        //LinAvg();
+
+        //LinAvgTime();
+
+        //LinPesCzas();
+
+        // zlozonosc = 1+2+3+...+N = ((1+N)(N/2))/N = (1+N)/2
+        //Console.WriteLine("LinAvg:");
+        //LinAvg();
+
+        // zlozonosc = Log(2, N)
+        //Console.WriteLine("BinPes:");
+
+        //BinPes();
+
+        //BinPesCzas();
+
+        //Bin_Avg_Czas();
+
+        //zlozonosc = Log(2, N) - 1 = Log(2, N/2)
+        Console.WriteLine("BinAvg:");
+
+        //BinAvg();
+        Console.ReadKey();
+    }
+} // App

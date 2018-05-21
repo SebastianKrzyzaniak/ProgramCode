@@ -1,0 +1,67 @@
+using System;
+
+class App
+{
+    const int N = 1000;
+    static ulong[] Tab;
+
+    static ulong fibRek(ulong n)
+    {
+        switch (n)
+        {
+            case 0: return 1;
+            case 1: return 1;
+            default: return fibRek(n - 1) + fibRek(n - 2);
+        }
+    }
+    //-------------------------
+
+    static ulong fibRekTab(ulong n)
+    {
+        if (Tab == null)
+        {
+            Tab = new ulong[N];
+            Tab[0] = 1;
+            Tab[1] = 1;
+        }
+
+        if (n <= 1) return 1;
+        else
+        {
+            if (Tab[n] > 0) return Tab[n];
+            Tab[n] = ((Tab[n - 1] > 0) ? Tab[n - 1] : fibRekTab(n - 1)) +
+            ((Tab[n - 2] > 0) ? Tab[n - 2] : fibRekTab(n - 2));
+            return Tab[n];
+        }
+    }
+    //-------------------------
+
+    static ulong fibIt(ulong n)
+    {
+        if (n < 2) return 1;
+
+        ulong f1 = 1;
+        ulong f2 = 1;
+        ulong f = 0;
+        for (ulong i = 2; i <= n; i++)
+        {
+            f = f1 + f2;
+            f1 = f2;
+            f2 = f;
+        }
+
+        return f;
+    }
+    //-----------------
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Iteracyjna:");
+        for (ulong u = 0; u <= 90; u++)
+            Console.WriteLine("{0}\t{1}", u, fibIt(u));
+
+        Console.WriteLine("\nRekurencyjna:");
+        for (ulong u = 0; u <= 90; u++)
+            Console.WriteLine("{0}\t{1}", u, fibRekTab(u));
+    }
+} // App
