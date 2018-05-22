@@ -1,0 +1,100 @@
+# Those lists are to be used for printing given numbers
+Zero  = [" *** ", 
+         "*   *", 
+         "*   *", 
+         "*   *",
+         "*   *",
+         "*   *",
+         " *** "]
+One   = [" * ",
+         "** ",
+         " * ",
+         " * ",
+         " * ",
+         " * ",
+         "***"]
+Two   = [" *** ",
+         "*   *",
+         "*  * ",
+         "  *  ",
+         " *   ",
+         "*    ",
+         "*****"]
+Three = [" *** ",
+         "*   *",
+         "    *",
+         "  ** ",
+         "    *",
+         "*   *",
+         " *** "]
+Four  = ["    * ",
+         "   ** ",
+         "  * * ",
+         " *  * ",
+         "******",
+         "    * ",
+         "    * "]
+Five  = ["*****",
+         "*    ",
+         "*    ",
+         " *** ",
+         "    *",
+         "*   *",
+         " *** "]
+Six   = [" *** ",
+         "*   *",
+         "*    ",
+         "**** ",
+         "*   *",
+         "*   *",
+         " *** "]
+Seven = ["*****",
+         "    *",
+         "   * ",
+         "  *  ",
+         " *   ",
+         "*    ",
+         "*    "]
+Eight = [" *** ",
+         "*   *",
+         "*   *",
+         " *** ",
+         "*   *",
+         "*   *",
+         " *** "]
+Nine  = [" ****",
+         "*   *",
+         "*   *",
+         " ****",
+         "    *",
+         "    *",
+         " *** "]
+ 
+Digits = [Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine]
+
+
+def print_usage():
+    print("Usage: bigdigits.py <numbers>")
+
+
+def print_big_digits(_digits):
+    _num=0
+    _dl = _digits
+    while _num < 7:
+        for i in _digits:
+            num = int(i)
+            print(Digits[num][_num]," ", end='')
+        print("")
+        _num += 1
+    pass
+    
+
+if __name__ == '__main__':
+    import sys
+    # This part of code will be run, if this script will be run as a program (not imported by some module)
+    # Let this script to have one argument which should be a number string, do important checks
+    nnumber = sys.argv[1]
+    #numberr ="100"
+    #number = input()
+    print_big_digits(nnumber)
+   #print(sys.argv[0])
