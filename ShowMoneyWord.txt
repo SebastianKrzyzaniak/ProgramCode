@@ -100,9 +100,10 @@ namespace ConsoleApp53
                 tab_sl.Add(sb.ToString()); sb.Clear();
             }
             int k = 0;      //num for for            
-            for (int countTab = tab.Length; countTab > 2; countTab--) { addValue(countTab, tab, k, tab_sl); k++; }
-            tab_sl[tab.Length - 2] += "złotych i "; tab_sl[tab.Length - 1] += "groszy";
-            sb.Append(_gr+" gr  ->  "); sb.Append(_zl);     //gr->zł
+            for (int countTab = tab.Length; countTab > 0; countTab--) { addValue(countTab, tab, k, tab_sl); k++; }
+            //if (tab[tab.Length - 2] != "0") { tab_sl[tab.Length - 2] += "złotych i "; }
+            //tab_sl[tab.Length - 1] += "groszy";
+            sb.Append(_gr+" gr  ->  "); sb.Append(_zl);     //gr->zł in console  //can del.
             foreach (string words in tab_sl) sb.Append(words);
             return sb.ToString();
         }
@@ -150,9 +151,8 @@ namespace ConsoleApp53
                 case '9':
                     return "dziewięć ";
                 default:
-                    break;
+                    return "";
             }
-            return "X(2)";      //error 2
         }
         public string UntFT(char t)     //unt_for_ten
         {
@@ -174,14 +174,16 @@ namespace ConsoleApp53
                     return "siedemnaście ";
                 case '8':
                     return "osiemnaście ";
-                default:
+                case '9':
                     return "dziewiętnaście ";
+                default:
+                    return "";                    
             }
         }
         public string UntFTS(char t)     //unt_for_tens
         {
             switch (t)
-            {
+            {          
                 case '2':
                     return "dwadzieścia ";
                 case '3':
@@ -196,8 +198,10 @@ namespace ConsoleApp53
                     return "siedemdziesiąt ";
                 case '8':
                     return "osiemdziesiąt ";
-                default:
+                case '9':
                     return "dziewięćdziesiąt ";
+                default:
+                    return "";
             }
         }
         public string UntFH(char t)     //unt_for_hundret
@@ -223,9 +227,8 @@ namespace ConsoleApp53
                 case '9':
                     return "dziewięćset ";
                 default:
-                    break;
+                    return "";
             }
-            return "X(3)";       //error 3
         }
         private string addValue(int countTab, string[] tab, int k, List<string> tab_sl)       //tysiące, miliony itd. ... ( jeżeli długosc tablicy=3 to tysiące, =4 to miliony itd..)
         {
@@ -235,7 +238,22 @@ namespace ConsoleApp53
             else num = (int)Char.GetNumericValue((tab[k][2]));
         
             switch (countTab)
-            {        
+            {
+                case 1:
+                    if (tab[k] == "00") tab_sl[k] += "zero groszy";
+                    else if (tab[k] == "01") tab_sl[k] += "grosz";
+                    else if (num > 1 && num < 5) tab_sl[k] += "grosze";
+                    else tab_sl[k] += "groszy";
+                    break;
+                case 2:
+                    if (tab[tab.Length - 2] != "0")     //if 0 zł doesn't add "złotych" 
+                    {
+                        if (tab[k] == "1") tab_sl[k] += "złoty i ";
+                        else if (num > 1 && num < 5) tab_sl[k] += "złote i ";
+                        else tab_sl[k] += "złotych i ";
+                    }
+                    else return "";
+                    break;
                 case 3:     //tys
                     if (tab[k] == "1") tab_sl[k] = "tysiąc ";                   
                     else if (num > 1 && num < 5) tab_sl[k] += "tysiące ";
@@ -279,7 +297,7 @@ namespace ConsoleApp53
                 default:
                     return "X(addValue)";       //error                    
             }
-            return "X(addValue2)";
+            return "";
         }
 
         class Program
@@ -288,7 +306,7 @@ namespace ConsoleApp53
             {
                 ShowMoney show = new ShowMoney();
                 //  ulong gr= 912345678;        //9 123 456,78 zł
-                string _gr = "9812345678";      //98 123 456,78 zł       
+                string _gr = "9812345678";      //98 123 456,78 zł    
                 Console.WriteLine(show.MAINShowMoneyWord(_gr));
                 Console.ReadKey();
             }
