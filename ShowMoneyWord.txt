@@ -12,7 +12,7 @@ namespace ConsoleApp53
         public short i;
         public StringBuilder sb = new StringBuilder();
         static int k;
-        public string Convr(string gr)      // conversion gr->z³
+        public string Convr(string gr)      // conversion gr->zÅ‚
         {
             k = 0;
             if (gr.Length == 0) { return "Correct the mistakes!"; }
@@ -80,14 +80,14 @@ namespace ConsoleApp53
             }
 
 
-            string _zl = sb.ToString() + " z³";
+            string _zl = sb.ToString() + " zÅ‚";
             return _zl;
         }
         //-----------------------------SHOW_MONEY_WORD
         public string MAINShowMoneyWord(string _gr)
         {
-            Convr(_gr);
-            char a, b; a = ' '; b = ',';
+            string _zl = Convr(_gr) + " \n";
+             char a, b; a = ' '; b = ',';
             int cLen;       //length c in foreach
             string str = sb.ToString();
             var tab = str.Split(a, b);
@@ -101,12 +101,13 @@ namespace ConsoleApp53
             }
             int k = 0;      //num for for            
             for (int countTab = tab.Length; countTab > 2; countTab--) { addValue(countTab, tab, k, tab_sl); k++; }
-            tab_sl[tab.Length - 2] += "z³otych i "; tab_sl[tab.Length - 1] += "groszy";
+            tab_sl[tab.Length - 2] += "zÅ‚otych i "; tab_sl[tab.Length - 1] += "groszy";
+            sb.Append(_gr+" gr  ->  "); sb.Append(_zl);     //gr->zÅ‚
             foreach (string words in tab_sl) sb.Append(words);
             return sb.ToString();
         }
-        //----------------------------------------------SHOW_MONEY_WORD  ^^     // 1   2   3  4
-        private void SwitchMain(List<string> tab_sl, string c, int cLean)      // 98 123 456 78   USUN¥æ, to tylko przyk³ad
+        //----------------------------------------------  
+        private void SwitchMain(List<string> tab_sl, string c, int cLean)
         {
             switch (cLean)
             {
@@ -114,7 +115,7 @@ namespace ConsoleApp53
                     { sb.Append(Unt(c[i])); }
                     break;
                 case 2:
-                    if (c == "10") { sb.Append("dziesiêæ "); }
+                    if (c == "10") { sb.Append("dziesiÄ™Ä‡ "); }
                     else if (c[i] == 1) { sb.Append(UntFT(c[(i + 1)])); }
                     else { sb.Append(UntFTS(c[i++])); sb.Append(Unt(c[i])); }
                     break;
@@ -126,7 +127,7 @@ namespace ConsoleApp53
         }
 
         ////------------------------------------
-        public string Unt(char t)     //number of unities       //liczba jednoœci
+        public string Unt(char t)     //number of unities       //liczba jednoÅ›ci
         {
             switch (t)
             {
@@ -139,15 +140,15 @@ namespace ConsoleApp53
                 case '4':
                     return "cztery ";
                 case '5':
-                    return "piêæ ";
+                    return "piÄ™Ä‡ ";
                 case '6':
-                    return "szeœæ ";
+                    return "szeÅ›Ä‡ ";
                 case '7':
                     return "siedem ";
                 case '8':
                     return "osiem ";
                 case '9':
-                    return "dziewiêæ ";
+                    return "dziewiÄ™Ä‡ ";
                 default:
                     break;
             }
@@ -158,23 +159,23 @@ namespace ConsoleApp53
             switch (t)
             {
                 case '1':
-                    return "jedenaœcie ";
+                    return "jedenaÅ›cie ";
                 case '2':
-                    return "dwanaœcie ";
+                    return "dwanaÅ›cie ";
                 case '3':
-                    return "trzynaœcie ";
+                    return "trzynaÅ›cie ";
                 case '4':
-                    return "czternaœcie ";
+                    return "czternaÅ›cie ";
                 case '5':
-                    return "piêtnaœcie ";
+                    return "piÄ™tnaÅ›cie ";
                 case '6':
-                    return "szesnaœcie ";
+                    return "szesnaÅ›cie ";
                 case '7':
-                    return "siedemnaœcie ";
+                    return "siedemnaÅ›cie ";
                 case '8':
-                    return "osiemnaœcie ";
+                    return "osiemnaÅ›cie ";
                 default:
-                    return "dziewiêtnaœcie ";
+                    return "dziewiÄ™tnaÅ›cie ";
             }
         }
         public string UntFTS(char t)     //unt_for_tens
@@ -182,21 +183,21 @@ namespace ConsoleApp53
             switch (t)
             {
                 case '2':
-                    return "dwadzieœcia ";
+                    return "dwadzieÅ›cia ";
                 case '3':
-                    return "trzydzieœci ";
+                    return "trzydzieÅ›ci ";
                 case '4':
-                    return "czterdzieœci ";
+                    return "czterdzieÅ›ci ";
                 case '5':
-                    return "piêædziesi¹t ";
+                    return "piÄ™Ä‡dziesiÄ…t ";
                 case '6':
-                    return "szeœædziesi¹t ";
+                    return "szeÅ›Ä‡dziesiÄ…t ";
                 case '7':
-                    return "siedemdziesi¹t ";
+                    return "siedemdziesiÄ…t ";
                 case '8':
-                    return "osiemdziesi¹t ";
+                    return "osiemdziesiÄ…t ";
                 default:
-                    return "dziewiêædziesi¹t ";
+                    return "dziewiÄ™Ä‡dziesiÄ…t ";
             }
         }
         public string UntFH(char t)     //unt_for_hundret
@@ -206,27 +207,27 @@ namespace ConsoleApp53
                 case '1':
                     return "sto ";
                 case '2':
-                    return "dwieœcie ";
+                    return "dwieÅ›cie ";
                 case '3':
                     return "trzysta ";
                 case '4':
                     return "czterysta ";
                 case '5':
-                    return "piêæset ";
+                    return "piÄ™Ä‡set ";
                 case '6':
-                    return "szeœæset ";
+                    return "szeÅ›Ä‡set ";
                 case '7':
                     return "siedemset ";
                 case '8':
                     return "osiemset ";
                 case '9':
-                    return "dziewiêæset ";
+                    return "dziewiÄ™Ä‡set ";
                 default:
                     break;
             }
             return "X(3)";       //error 3
         }
-        private string addValue(int countTab, string[] tab, int k, List<string> tab_sl)       //tysi¹ce, miliony itd. ... ( je¿eli d³ugosc tablicy=3 to tysi¹ce, =4 to miliony itd..)
+        private string addValue(int countTab, string[] tab, int k, List<string> tab_sl)       //tysiÄ…ce, miliony itd. ... ( jeÅ¼eli dÅ‚ugosc tablicy=3 to tysiÄ…ce, =4 to miliony itd..)
         {
             int num=0;
             if (tab[k].Length==1)  num = (int)Char.GetNumericValue((tab[k][0]));
@@ -236,44 +237,44 @@ namespace ConsoleApp53
             switch (countTab)
             {        
                 case 3:     //tys
-                    if (tab[k] == "1") tab_sl[k] = "tysi¹c ";                   
-                    else if (num > 1 && num < 5) tab_sl[k] += "tysi¹ce ";
-                    else tab_sl[k] += "tysi¹cy ";
+                    if (tab[k] == "1") tab_sl[k] = "tysiÄ…c ";                   
+                    else if (num > 1 && num < 5) tab_sl[k] += "tysiÄ…ce ";
+                    else tab_sl[k] += "tysiÄ…cy ";
                     break;
                 case 4:     //mln
                     if (tab[k] == "1") tab_sl[k] = "milion ";
                     else if (num > 1 && num < 5) tab_sl[k] += "miliony  ";
-                    else tab_sl[k] += "milionów ";
+                    else tab_sl[k] += "milionÃ³w ";
                     break;
                 case 5:     //mld
                     if (tab[k] == "1") tab_sl[k] = "miliard ";
                     else if (num > 1 && num < 5) tab_sl[k] += "miliardy  ";
-                    else tab_sl[k] += "miliardów ";
+                    else tab_sl[k] += "miliardÃ³w ";
                     break;
                 case 6:     //bln
                     if (tab[k] == "1") tab_sl[k] = "bilion ";
                     else if (num > 1 && num < 5) tab_sl[k] += "biliony  ";
-                    else tab_sl[k] += "bilionów ";
+                    else tab_sl[k] += "bilionÃ³w ";
                     break;
                 case 7:     //bld
                     if (tab[k] == "1") tab_sl[k] = "biliard ";
                     else if (num > 1 && num < 5) tab_sl[k] += "biliardy  ";
-                    else tab_sl[k] += "biliardów ";
+                    else tab_sl[k] += "biliardÃ³w ";
                     break;
                 case 8:     //trl
                     if (tab[k] == "1") tab_sl[k] = "trylion ";
                     else if (num > 1 && num < 5) tab_sl[k] += "tryliony  ";
-                    else tab_sl[k] += "trylionów ";
+                    else tab_sl[k] += "trylionÃ³w ";
                     break;
                 case 9:     //trd
                     if (tab[k] == "1") tab_sl[k] = "tryliard ";
                     else if (num > 1 && num < 5) tab_sl[k] += "tryliardy  ";
-                    else tab_sl[k] += "tryliardów ";
+                    else tab_sl[k] += "tryliardÃ³w ";
                     break;
                 case 10:    //kwl
                     if (tab[k] == "1") tab_sl[k] = "kwadrylion ";
                     else if (num > 1 && num < 5) tab_sl[k] += "kwadryliony  ";
-                    else tab_sl[k] += "kwadrylionów ";
+                    else tab_sl[k] += "kwadrylionÃ³w ";
                     break;
                 default:
                     return "X(addValue)";       //error                    
@@ -286,8 +287,8 @@ namespace ConsoleApp53
             static void Main(string[] args)
             {
                 ShowMoney show = new ShowMoney();
-                //  ulong gr= 912345678;        //9 123 456,78 z³
-                string _gr = "9812345678";      //98 123 456,78 z³       
+                //  ulong gr= 912345678;        //9 123 456,78 zÅ‚
+                string _gr = "9812345678";      //98 123 456,78 zÅ‚       
                 Console.WriteLine(show.MAINShowMoneyWord(_gr));
                 Console.ReadKey();
             }
