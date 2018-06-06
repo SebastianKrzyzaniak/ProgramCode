@@ -1,0 +1,301 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp53
+{
+
+    public class ShowMoney
+    {
+        public short i;
+        public StringBuilder sb = new StringBuilder();
+        static int k;
+        public string Convr(string gr)      // conversion gr->z³
+        {
+            k = 0;
+            if (gr.Length == 0) { return "Correct the mistakes!"; }
+            else if (gr.Length < 2) { sb.Append("0"); sb.Append(","); sb.Append("0"); sb.Append(gr[0]); }
+            else if (gr.Length < 3) { sb.Append("0"); sb.Append(","); sb.Append(gr[0]); sb.Append(gr[1]); }
+            else if (gr.Length < 4) { sb.Append(gr[0]); sb.Append(","); sb.Append(gr[1]); sb.Append(gr[2]); }
+            else if (gr.Length < 5) { sb.Append(gr[0]); sb.Append(gr[1]); sb.Append(","); sb.Append(gr[2]); sb.Append(gr[3]); }
+            else if ((gr.Length - 2) % 3 == 0)
+            {
+                for (int i = 1; i < ((gr.Length - 2) / 3); i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        sb.Append(gr[k]);
+                        k++;
+                    }
+                    sb.Append(" ");
+                }
+                for (int j = 0; j < 3; j++)
+                {
+                    sb.Append(gr[k]);
+                    k++;
+                }
+                sb.Append(","); sb.Append(gr[gr.Length - 2]); sb.Append(gr[gr.Length - 1]);
+            }
+            else if ((gr.Length - 2) % 3 == 1)
+            {
+                k++;
+                sb.Append(gr[0]); sb.Append(" ");
+                for (int i = 1; i < (gr.Length - 3) / 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        sb.Append(gr[k]);
+                        k++;
+                    }
+                    sb.Append(" ");
+                }
+                for (int j = 0; j < 3; j++)
+                {
+                    sb.Append(gr[k]);
+                    k++;
+                }
+                sb.Append(","); sb.Append(gr[gr.Length - 2]); sb.Append(gr[gr.Length - 1]);
+            }
+            else if ((gr.Length - 2) % 3 == 2)
+            {
+                k += 2;
+                sb.Append(gr[0]); sb.Append(gr[1]); sb.Append(" ");
+                for (int i = 1; i < (gr.Length - 4) / 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        sb.Append(gr[k]);
+                        k++;
+                    }
+                    sb.Append(" ");
+                }
+                for (int j = 0; j < 3; j++)
+                {
+                    sb.Append(gr[k]);
+                    k++;
+                }
+                sb.Append(","); sb.Append(gr[gr.Length - 2]); sb.Append(gr[gr.Length - 1]);
+            }
+
+
+            string _zl = sb.ToString() + " z³";
+            return _zl;
+        }
+        //-----------------------------SHOW_MONEY_WORD
+        public string MAINShowMoneyWord(string _gr)
+        {
+            Convr(_gr);
+            char a, b; a = ' '; b = ',';
+            int cLen;       //length c in foreach
+            string str = sb.ToString();
+            var tab = str.Split(a, b);
+            sb.Clear();
+            List<string> tab_sl = new List<string>();
+            foreach (string c in tab)
+            {
+                cLen = c.Length;
+                SwitchMain(tab_sl, c, cLen);
+                tab_sl.Add(sb.ToString()); sb.Clear();
+            }
+            int k = 0;      //num for for            
+            for (int countTab = tab.Length; countTab > 2; countTab--) { addValue(countTab, tab, k, tab_sl); k++; }
+            tab_sl[tab.Length - 2] += "z³otych i "; tab_sl[tab.Length - 1] += "groszy";
+            foreach (string words in tab_sl) sb.Append(words);
+            return sb.ToString();
+        }
+        //----------------------------------------------SHOW_MONEY_WORD  ^^     // 1   2   3  4
+        private void SwitchMain(List<string> tab_sl, string c, int cLean)      // 98 123 456 78   USUN¥æ, to tylko przyk³ad
+        {
+            switch (cLean)
+            {
+                case 1:
+                    { sb.Append(Unt(c[i])); }
+                    break;
+                case 2:
+                    if (c == "10") { sb.Append("dziesiêæ "); }
+                    else if (c[i] == 1) { sb.Append(UntFT(c[(i + 1)])); }
+                    else { sb.Append(UntFTS(c[i++])); sb.Append(Unt(c[i])); }
+                    break;
+                case 3:
+                    { sb.Append(UntFH(c[i++])); SwitchMain(tab_sl, c, (cLean - 1)); }
+                    break;
+            }
+            i = 0;
+        }
+
+        ////------------------------------------
+        public string Unt(char t)     //number of unities       //liczba jednoœci
+        {
+            switch (t)
+            {
+                case '1':
+                    return "jeden ";
+                case '2':
+                    return "dwa ";
+                case '3':
+                    return "trzy ";
+                case '4':
+                    return "cztery ";
+                case '5':
+                    return "piêæ ";
+                case '6':
+                    return "szeœæ ";
+                case '7':
+                    return "siedem ";
+                case '8':
+                    return "osiem ";
+                case '9':
+                    return "dziewiêæ ";
+                default:
+                    break;
+            }
+            return "X(2)";      //error 2
+        }
+        public string UntFT(char t)     //unt_for_ten
+        {
+            switch (t)
+            {
+                case '1':
+                    return "jedenaœcie ";
+                case '2':
+                    return "dwanaœcie ";
+                case '3':
+                    return "trzynaœcie ";
+                case '4':
+                    return "czternaœcie ";
+                case '5':
+                    return "piêtnaœcie ";
+                case '6':
+                    return "szesnaœcie ";
+                case '7':
+                    return "siedemnaœcie ";
+                case '8':
+                    return "osiemnaœcie ";
+                default:
+                    return "dziewiêtnaœcie ";
+            }
+        }
+        public string UntFTS(char t)     //unt_for_tens
+        {
+            switch (t)
+            {
+                case '2':
+                    return "dwadzieœcia ";
+                case '3':
+                    return "trzydzieœci ";
+                case '4':
+                    return "czterdzieœci ";
+                case '5':
+                    return "piêædziesi¹t ";
+                case '6':
+                    return "szeœædziesi¹t ";
+                case '7':
+                    return "siedemdziesi¹t ";
+                case '8':
+                    return "osiemdziesi¹t ";
+                default:
+                    return "dziewiêædziesi¹t ";
+            }
+        }
+        public string UntFH(char t)     //unt_for_hundret
+        {
+            switch (t)
+            {
+                case '1':
+                    return "sto ";
+                case '2':
+                    return "dwieœcie ";
+                case '3':
+                    return "trzysta ";
+                case '4':
+                    return "czterysta ";
+                case '5':
+                    return "piêæset ";
+                case '6':
+                    return "szeœæset ";
+                case '7':
+                    return "siedemset ";
+                case '8':
+                    return "osiemset ";
+                case '9':
+                    return "dziewiêæset ";
+                default:
+                    break;
+            }
+            return "X(3)";       //error 3
+        }
+        private string addValue(int countTab, string[] tab, int k, List<string> tab_sl)       //tysi¹ce, miliony itd. ... ( je¿eli d³ugosc tablicy=3 to tysi¹ce, =4 to miliony itd..)
+        {
+            int num=0;
+            if (tab[k].Length==1)  num = (int)Char.GetNumericValue((tab[k][0]));
+            else if (tab[k].Length==2) num = (int)Char.GetNumericValue((tab[k][1]));
+            else num = (int)Char.GetNumericValue((tab[k][2]));
+        
+            switch (countTab)
+            {        
+                case 3:     //tys
+                    if (tab[k] == "1") tab_sl[k] = "tysi¹c ";                   
+                    else if (num > 1 && num < 5) tab_sl[k] += "tysi¹ce ";
+                    else tab_sl[k] += "tysi¹cy ";
+                    break;
+                case 4:     //mln
+                    if (tab[k] == "1") tab_sl[k] = "milion ";
+                    else if (num > 1 && num < 5) tab_sl[k] += "miliony  ";
+                    else tab_sl[k] += "milionów ";
+                    break;
+                case 5:     //mld
+                    if (tab[k] == "1") tab_sl[k] = "miliard ";
+                    else if (num > 1 && num < 5) tab_sl[k] += "miliardy  ";
+                    else tab_sl[k] += "miliardów ";
+                    break;
+                case 6:     //bln
+                    if (tab[k] == "1") tab_sl[k] = "bilion ";
+                    else if (num > 1 && num < 5) tab_sl[k] += "biliony  ";
+                    else tab_sl[k] += "bilionów ";
+                    break;
+                case 7:     //bld
+                    if (tab[k] == "1") tab_sl[k] = "biliard ";
+                    else if (num > 1 && num < 5) tab_sl[k] += "biliardy  ";
+                    else tab_sl[k] += "biliardów ";
+                    break;
+                case 8:     //trl
+                    if (tab[k] == "1") tab_sl[k] = "trylion ";
+                    else if (num > 1 && num < 5) tab_sl[k] += "tryliony  ";
+                    else tab_sl[k] += "trylionów ";
+                    break;
+                case 9:     //trd
+                    if (tab[k] == "1") tab_sl[k] = "tryliard ";
+                    else if (num > 1 && num < 5) tab_sl[k] += "tryliardy  ";
+                    else tab_sl[k] += "tryliardów ";
+                    break;
+                case 10:    //kwl
+                    if (tab[k] == "1") tab_sl[k] = "kwadrylion ";
+                    else if (num > 1 && num < 5) tab_sl[k] += "kwadryliony  ";
+                    else tab_sl[k] += "kwadrylionów ";
+                    break;
+                default:
+                    return "X(addValue)";       //error                    
+            }
+            return "X(addValue2)";
+        }
+
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                ShowMoney show = new ShowMoney();
+                //  ulong gr= 912345678;        //9 123 456,78 z³
+                string _gr = "9812345678";      //98 123 456,78 z³       
+                Console.WriteLine(show.MAINShowMoneyWord(_gr));
+                Console.ReadKey();
+            }
+
+            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+        }
+
+    }
+}
