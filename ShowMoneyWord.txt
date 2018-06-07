@@ -9,7 +9,7 @@ namespace ConsoleApp53
 
     public class ShowMoney
     {
-        private short i;
+        private short i=0;
         private StringBuilder sb = new StringBuilder();
         private int k;
         public string Convr(string gr)      // conversion gr->zł
@@ -101,15 +101,13 @@ namespace ConsoleApp53
             }
             int k = 0;      //num for for            
             for (int countTab = tab.Length; countTab > 0; countTab--) { addValue(countTab, tab, k, tab_sl); k++; }
-            //if (tab[tab.Length - 2] != "0") { tab_sl[tab.Length - 2] += "złotych i "; }
-            //tab_sl[tab.Length - 1] += "groszy";
             sb.Append(_gr+" gr  ->  "); sb.Append(_zl);     //gr->zł in console  //can del.
             foreach (string words in tab_sl) sb.Append(words);
             return sb.ToString();
         }
         //----------------------------------------------  
         private void SwitchMain(List<string> tab_sl, string c, int cLean)
-        {
+        {                            
             switch (cLean)
             {
                 case 1:
@@ -117,7 +115,7 @@ namespace ConsoleApp53
                     break;
                 case 2:
                     if (c == "10") { sb.Append("dziesięć "); }
-                    else if (c[i] == 1) { sb.Append(UntFT(c[(i + 1)])); }
+                    else if (c[i] == '1') { sb.Append(UntFT(c[(i + 1)])); }
                     else { sb.Append(UntFTS(c[i++])); sb.Append(Unt(c[i])); }
                     break;
                 case 3:
@@ -243,7 +241,7 @@ namespace ConsoleApp53
                     case 1:
                         if (tab[k] == "00") tab_sl[k] += "zero groszy";
                         else if (tab[k] == "01") tab_sl[k] += "grosz";
-                        else if (num > 1 && num < 5) tab_sl[k] += "grosze";
+                        else if (num > 1 && num < 5 && tab[k][0]!='1') tab_sl[k] += "grosze";
                         else tab_sl[k] += "groszy";
                         break;
                     case 2:
@@ -325,7 +323,7 @@ namespace ConsoleApp53
             {                        
                 ShowMoney show = new ShowMoney();
               //ulong gr= 912345678;        //9 123 456,78 zł
-                string _gr = "10000000097654";      //98 123 456,78 zł 
+                string _gr = "2122";      //98 123 456,78 zł 
                 Console.WriteLine(show.MAINShowMoneyWord(_gr));
              // Console.WriteLine(show.Convr2(_gr));
                 Console.ReadKey();
