@@ -9,7 +9,7 @@ namespace ConsoleApp53
 
     public class ShowMoney
     {
-        private short i=0;
+        private short i = 0;
         private StringBuilder sb = new StringBuilder();
         private int k;
         public string Convr(string gr)      // conversion gr->zł
@@ -87,7 +87,7 @@ namespace ConsoleApp53
         public string MAINShowMoneyWord(string _gr)
         {
             string _zl = Convr2(_gr) + " \n";
-             char a, b; a = ' '; b = ',';
+            char a, b; a = ' '; b = ',';
             int cLen;       //length c in foreach
             string str = sb.ToString();
             var tab = str.Split(a, b);
@@ -101,13 +101,13 @@ namespace ConsoleApp53
             }
             int k = 0;      //num for for            
             for (int countTab = tab.Length; countTab > 0; countTab--) { addValue(countTab, tab, k, tab_sl); k++; }
-            sb.Append(_gr+" gr  ->  "); sb.Append(_zl);     //gr->zł in console  //can del.
+            sb.Append(_gr + " gr  ->  "); sb.Append(_zl);     //gr->zł in console  //can del.
             foreach (string words in tab_sl) sb.Append(words);
             return sb.ToString();
         }
         //----------------------------------------------  
         private void SwitchMain(List<string> tab_sl, string c, int cLean)
-        {                            
+        {
             switch (cLean)
             {
                 case 1:
@@ -175,13 +175,13 @@ namespace ConsoleApp53
                 case '9':
                     return "dziewiętnaście ";
                 default:
-                    return "";                    
+                    return "";
             }
         }
         private string UntFTS(char t)     //unt_for_tens
         {
             switch (t)
-            {          
+            {
                 case '2':
                     return "dwadzieścia ";
                 case '3':
@@ -241,91 +241,91 @@ namespace ConsoleApp53
                     case 1:
                         if (tab[k] == "00") tab_sl[k] += "zero groszy";
                         else if (tab[k] == "01") tab_sl[k] += "grosz";
-                        else if (num > 1 && num < 5 && tab[k][0]!='1') tab_sl[k] += "grosze";
+                        else if (num > 1 && num < 5 && tab[k][0] != '1') tab_sl[k] += "grosze";
                         else tab_sl[k] += "groszy";
                         break;
                     case 2:
                         if (tab[tab.Length - 2] != "0")     //if 0 zł doesn't add "złotych" 
                         {
-                            if (tab[k] == "1") tab_sl[k] += "złoty i ";
+                            if (tab_sl[k] == "jeden ") tab_sl[k] += "złoty i "; //(tab[k] == "1")
                             else if (num > 1 && num < 5) tab_sl[k] += "złote i ";
                             else tab_sl[k] += "złotych i ";
                         }
                         break;
                     case 3:     //tys
-                        if (tab[k] == "1") tab_sl[k] = "tysiąc ";
+                        if (tab_sl[k] == "jeden ") tab_sl[k] = "tysiąc ";
                         else if (num > 1 && num < 5) tab_sl[k] += "tysiące ";
-                        else tab_sl[k] += "tysiący ";
+                        else tab_sl[k] += "tysięcy ";
                         break;
                     case 4:     //mln
-                        if (tab[k] == "1") tab_sl[k] = "milion ";
+                        if (tab_sl[k] == "jeden ") tab_sl[k] = "milion ";
                         else if (num > 1 && num < 5) tab_sl[k] += "miliony  ";
                         else tab_sl[k] += "milionów ";
                         break;
                     case 5:     //mld
-                        if (tab[k] == "1") tab_sl[k] = "miliard ";
+                        if (tab_sl[k] == "jeden ") tab_sl[k] = "miliard ";
                         else if (num > 1 && num < 5) tab_sl[k] += "miliardy  ";
                         else tab_sl[k] += "miliardów ";
                         break;
                     case 6:     //bln
-                        if (tab[k] == "1") tab_sl[k] = "bilion ";
+                        if (tab_sl[k] == "jeden ") tab_sl[k] = "bilion ";
                         else if (num > 1 && num < 5) tab_sl[k] += "biliony  ";
                         else tab_sl[k] += "bilionów ";
                         break;
                     case 7:     //bld
-                        if (tab[k] == "1") tab_sl[k] = "biliard ";
+                        if (tab_sl[k] == "jeden ") tab_sl[k] = "biliard ";
                         else if (num > 1 && num < 5) tab_sl[k] += "biliardy  ";
                         else tab_sl[k] += "biliardów ";
                         break;
                     case 8:     //trl
-                        if (tab[k] == "1") tab_sl[k] = "trylion ";
+                        if (tab_sl[k] == "jeden ") tab_sl[k] = "trylion ";
                         else if (num > 1 && num < 5) tab_sl[k] += "tryliony  ";
                         else tab_sl[k] += "trylionów ";
                         break;
                     case 9:     //trd
-                        if (tab[k] == "1") tab_sl[k] = "tryliard ";
+                        if (tab_sl[k] == "jeden ") tab_sl[k] = "tryliard ";
                         else if (num > 1 && num < 5) tab_sl[k] += "tryliardy  ";
                         else tab_sl[k] += "tryliardów ";
                         break;
                     case 10:    //kwl
-                        if (tab[k] == "1") tab_sl[k] = "kwadrylion ";
+                        if (tab_sl[k] == "jeden ") tab_sl[k] = "kwadrylion ";
                         else if (num > 1 && num < 5) tab_sl[k] += "kwadryliony  ";
                         else tab_sl[k] += "kwadrylionów ";
                         break;
                 }
             }
         }
-        
-        public string Convr2 (string _gr)     //better Convert
+
+        public string Convr2(string _gr)     //better Convert
         {
             int modGr = (_gr.Length - 2) % 3;
             int dzielGr = (_gr.Length - 2) / 3;
             int whose = 0;
             for (int i = 0; i < modGr; i++) sb.Append(_gr[i]);
-            if (modGr!=0 && _gr.Length>5) sb.Append(" "); 
+            if (modGr != 0 && _gr.Length > 5) sb.Append(" ");
             for (int k = 0; k < dzielGr; k++)
-            {             
-                sb.Append(_gr[modGr+whose++]);
-                sb.Append(_gr[modGr+whose++]);
-                sb.Append(_gr[modGr+whose++]);
+            {
+                sb.Append(_gr[modGr + whose++]);
+                sb.Append(_gr[modGr + whose++]);
+                sb.Append(_gr[modGr + whose++]);
                 if (k < dzielGr - 1) sb.Append(" ");
             }
             if (_gr.Length == 2) sb.Append("0");
-            if (_gr.Length > 1) sb.Append("," + _gr[_gr.Length - 2]); else sb.Append("0,0");        
+            if (_gr.Length > 1) sb.Append("," + _gr[_gr.Length - 2]); else sb.Append("0,0");
             sb.Append(_gr[_gr.Length - 1]);
 
-            return sb.ToString()+" zł";
+            return sb.ToString() + " zł";
         }
 
         class Program
         {
             static void Main(string[] args)
-            {                        
+            {
                 ShowMoney show = new ShowMoney();
-              //ulong gr= 912345678;        //9 123 456,78 zł
-                string _gr = "2122";      //98 123 456,78 zł 
+                //ulong gr= 912345678;        //9 123 456,78 zł
+                string _gr = "909902493";      //98 123 456,78 zł 
                 Console.WriteLine(show.MAINShowMoneyWord(_gr));
-             // Console.WriteLine(show.Convr2(_gr));
+                // Console.WriteLine(show.Convr2(_gr));
                 Console.ReadKey();
             }
 
