@@ -1,0 +1,7 @@
+C:\Users\Sebastian\source\repos\AplikacjaKonsoliMSSQL\AplikacjaKonsoliMSSQL\bin\Debug\AplikacjaKonsoliMSSQL.exe.config
+C:\Users\Sebastian\source\repos\AplikacjaKonsoliMSSQL\AplikacjaKonsoliMSSQL\bin\Debug\AplikacjaKonsoliMSSQL.exe
+C:\Users\Sebastian\source\repos\AplikacjaKonsoliMSSQL\AplikacjaKonsoliMSSQL\bin\Debug\AplikacjaKonsoliMSSQL.pdb
+C:\Users\Sebastian\source\repos\AplikacjaKonsoliMSSQL\AplikacjaKonsoliMSSQL\obj\Debug\AplikacjaKonsoliMSSQL.csprojAssemblyReference.cache
+C:\Users\Sebastian\source\repos\AplikacjaKonsoliMSSQL\AplikacjaKonsoliMSSQL\obj\Debug\AplikacjaKonsoliMSSQL.csproj.CoreCompileInputs.cache
+C:\Users\Sebastian\source\repos\AplikacjaKonsoliMSSQL\AplikacjaKonsoliMSSQL\obj\Debug\AplikacjaKonsoliMSSQL.exe
+C:\Users\Sebastian\source\repos\AplikacjaKonsoliMSSQL\AplikacjaKonsoliMSSQL\obj\Debug\AplikacjaKonsoliMSSQL.pdb
