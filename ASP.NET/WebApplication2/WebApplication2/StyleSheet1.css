@@ -1,0 +1,67 @@
+﻿html {
+    font-family: 'Lato', sans-serif;
+}
+body {
+    background-color: lightblue;
+}
+
+#Label2 {
+    background-color: green;
+}
+
+#Button2 {
+    padding: 1.0rem 2.0rem;
+    border: 1px solid #2ca20c;
+}
+#Button2:hover {
+    padding: 1.2rem 2.2rem;
+}
+
+#Button3 {
+    margin-top: 1rem;
+    padding: 1.0rem 2.0rem; 
+}
+    #Button3:hover {   
+        padding: 1.2rem 2.2rem;
+        transition: 0.3s all linear;
+    }
+
+
+    ul > li {
+        padding: 0.5rem;
+    }
+        ul > li:first-child {
+            margin-left: 5rem;
+        }
+        ul > li:last-child {
+            margin-right: 5rem;
+        }
+
+.menu {
+    list-style: none;
+    padding: 0;
+        float:left;
+}
+    .menu > li {
+        display: block;
+        float: left;
+        background: gray;
+        color: #fff;
+        font-size: 1.2rem;
+        margin: 0.25rem;
+        padding: 1rem 2rem; 
+        transition: 0.3s all linear;
+    }
+    .menu li:hover {
+        background: #393939;
+        padding: 3rem 6rem;
+    }
+    
+    .obrazek{
+        color: red;
+        padding: 1.2rem 1.2rem;
+    }
+    /*#click {
+        text-indent: "Click";
+        padding: 3rem 3rem 3rem
+    }*/
